@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { addTodo } from '../actions';
 
-let nextTodoId = 0;
 const AddTodo = ({ dispatch }) => {
   let input;
 
@@ -13,11 +13,13 @@ const AddTodo = ({ dispatch }) => {
           if (!input.value.trim()) {
             return;
           }
-          dispatch({
-            type: 'ADD_TODO',
-            id: (nextTodoId++).toString(),
-            text: input.value,
-          });
+          // dispatch({
+          // Recommendation: Write action creators for each action type.
+          //  type: 'ADD_TODO',
+          //  id: (nextTodoId++).toString(),
+          //  text: input.value,
+          //  });
+          dispatch(addTodo(input.value));
           input.value = '';
         }}
       >
