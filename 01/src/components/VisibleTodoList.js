@@ -1,4 +1,6 @@
 import { connect } from 'react-redux';
+// use actions creator instead of custom mapDispatchToProps
+import { toggleTodo } from '../actions';
 import TodoList from './TodoList';
 
 const getVisibleTodos = (todos, filter) => {
@@ -14,26 +16,34 @@ const getVisibleTodos = (todos, filter) => {
   }
 };
 
-const mapStateToProps = (state) => {
-  return {
-    todos: getVisibleTodos(state.todos, state.visibilityFilter),
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     todos: getVisibleTodos(state.todos, state.visibilityFilter),
+//   };
+// };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onTodoClick: (id) => {
-      dispatch({
-        type: 'TOGGLE_TODO',
-        id,
-      });
-    },
-  };
-};
+// Recommendation: Use concise functions where possible (in action creators and `mapStateToProps`).
+const mapStateToProps = (state) => ({
+  todos: getVisibleTodos(state.todos, state.visibilityFilter),
+});
+
+// No to custom mapStateToProps!
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     onTodoClick: (id) => {
+//       dispatch({
+//         type: 'TOGGLE_TODO',
+//         id,
+//       });
+//     },
+//   };
+// };
 
 const VisibleTodoList = connect(
   mapStateToProps,
-  mapDispatchToProps
+  //mapDispatchToProps
+  { onTodoClick: toggleTodo }
 )(TodoList);
 
 export default VisibleTodoList;
